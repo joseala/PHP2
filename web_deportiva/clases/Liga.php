@@ -1,6 +1,9 @@
 <?php
 require_once 'Collection.php';
 require_once 'Equipo.php';
+require_once 'Partido.php';
+require_once 'Jornada.php';
+
 class Liga {
     
     private $nombre;
@@ -56,32 +59,31 @@ class Liga {
             $fecha = strtotime ( '+7 day' , strtotime ( $fecha ) ) ;
             $fecha = date ( 'Y-m-j' , $fecha );
             $miJornada = new Jornada($i+1,$fecha);
-            $miJornada->persist($bd, $this->id);
+            
             for ($j = 0; $j < count($visitantes); $j++) {
                 $liga[$i][$j]['local'] = $locales[$j];
                 $liga[$i][$j]['visitante'] = $visitantes[$j];
-                $partido = new Partido($locales[$j],"",$visitantes[$j],""); 
-                $partido->persist($bd, $miJornada->getId());
+                $partido = new Partido($j+1, $locales[$j],"",$visitantes[$j],""); 
                 $miJornada->getPartidos()->add($partido);
             }
+            $this->jornadas->add($miJornada);
             $equipoBase = array_shift($equipos);
             array_unshift($equipos, array_pop($equipos));
             array_unshift($equipos, $equipoBase);
         }
+        
         foreach ($liga as $jornada) {
             $fecha = strtotime ( '+7 day' , strtotime ( $fecha ) ) ;
             $fecha = date ( 'Y-m-j' , $fecha );
-            $miJornada = new Jornada($fecha,$i);
-            $miJornada->persist($bd, $this->id);
-            $this->jornadas->add($miJornada);
+            $miJornada = new Jornada($i+=1, $fecha);          
             foreach ($jornada as $partido) {
                 $local = $partido['visitante'];
                 $visitante = $partido['local'];
-                $partido = new Partido($visitante,"",$local,""); 
-                $partido->persist($bd, $miJornada->getId());
+                $partido = new Partido($j+=1,$visitante,"",$local,"");      
                 $miJornada->getPartidos()->add($partido);   
                 
             }
+            $this->jornadas->add($miJornada);
         }
         
     }

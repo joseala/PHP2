@@ -1,7 +1,7 @@
 <?php
 require_once 'clases/Liga.php';
 require_once 'clases/Equipo.php';
-
+session_start();
 if(empty($_POST)){
     include 'vistas/vista_crear_liga.php';
 }elseif (isset ($_POST['crear'])) {
@@ -13,7 +13,17 @@ if(empty($_POST)){
         $_SESSION['liga']->setEquipos(new Equipo(trim($equipo),$x+1));
     }
     $_SESSION['liga']->creaJornadas();
-    
+    include 'vistas/vista_jornadas.php';    
+} elseif(isset ($_POST['ver'])) {
+    $idJornada = $_POST['id'];
+    $jornada = $_SESSION['liga']->getJornadas()->getByProperty("id", $idJornada);
+    include 'vistas/vista_partidos.php';
+}elseif(isset ($_POST['guardar'])) {
+    $resultados = $_POST['resultados'];
+    $idJornada = $_POST['id'];
+    $jornada = $_SESSION['liga']->getJornadas()->getByProperty("id", $idJornada);
+    $jornada->actualizaPartido($resultados);
+    include 'vistas/vista_jornadas.php';
 }
 ?>
     
