@@ -20,14 +20,14 @@ and open the template in the editor.
             if($partido->getEquipoL() == "Descanso" || $partido->getEquipoV() == "Descanso"){
                  echo "<td><input type='text' readonly value='descanso' name='resultados[$x][gL]'></td>";
             }else{
-                echo "<td><input type='text' value='".$partido->getgV()."' name='resultados[$x][gL]'></td>";
+                echo "<td><input type='number' value='".$partido->getgV()."' name='resultados[$x][gL]'></td>";
             }
             
             echo "<td><input type='text' readonly name='resultado[$x][eqV]' value='".$partido->getEquipoV()."'</td>";
             if($partido->getEquipoL() == "Descanso" || $partido->getEquipoV() == "Descanso"){
                  echo "<td><input type='text' readonly value='descanso' name='resultados[$x][gV]'></td>";
             }else{
-                echo "<td><input type='text' value='".$partido->getgL()."'name='resultados[$x][gV]'></td>";
+                echo "<td><input type='number' value='".$partido->getgL()."'name='resultados[$x][gV]'></td>";
             }
             
             echo "</tr>";

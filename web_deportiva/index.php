@@ -2,7 +2,7 @@
 require_once 'clases/Liga.php';
 require_once 'clases/Equipo.php';
 session_start();
-if(empty($_POST)){
+if(empty($_POST) || isset($_POST['salir'])){
     include 'vistas/vista_crear_liga.php';
 }elseif (isset ($_POST['crear'])) {
     $equipos = $_POST['equipos'];
@@ -24,6 +24,13 @@ if(empty($_POST)){
     $jornada = $_SESSION['liga']->getJornadas()->getByProperty("id", $idJornada);
     $jornada->actualizaPartido($resultados);
     include 'vistas/vista_jornadas.php';
+}elseif(isset ($_POST['clasificacion'])) {
+    $clasificacion = $_SESSION['liga']->generaClasificacion();
+    include 'vistas/vista_clasificacion.php';
+}elseif(isset ($_POST['volver'])) {
+    include 'vistas/vista_jornadas.php';
+}else{
+    include 'vistas/vista_crear_liga.php';
 }
 ?>
     

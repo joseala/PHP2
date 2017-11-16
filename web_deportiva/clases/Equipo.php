@@ -45,15 +45,15 @@ class Equipo {
     }
 
     function setGf($Gf) {
-        $this->Gf = $Gf;
+        $this->Gf += $Gf;
     }
 
     function setGc($Gc) {
-        $this->Gc = $Gc;
+        $this->Gc += $Gc;
     }
 
     function setPuntos($puntos) {
-        $this->puntos = $puntos;
+        $this->puntos += $puntos;
     }
 
 

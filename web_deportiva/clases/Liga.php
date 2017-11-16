@@ -51,7 +51,7 @@ class Liga {
             array_push($equipos,$actual->getNombre());
         }
         
-        $fecha = date(DATE_ATOM, mktime(0, 0, 0, 2, 27, 2014));
+        $fecha = date(DATE_ATOM, mktime(0, 0, 0, 10, 26, 2014));
         for ($i = 0; $i < count($equipos) - 1; $i++) {
             $locales = array_slice($equipos, 0, (count($equipos) / 2));
             $visitantes = array_reverse(array_slice($equipos, (count($equipos) / 2)));
@@ -87,6 +87,45 @@ class Liga {
         }
         
     }
+    public function generaClasificacion() {
+        
+        while ($jornada = $this->jornadas->iterate()){
+            while ($partido = $jornada->getPartidos()->iterate()){
+                if(is_numeric($partido->getGL())){
+                    $equipoL = $this->equipos->getByProperty('nombre', $partido->getEquipoL());
+                    $equipoV = $this->equipos->getByProperty('nombre', $partido->getEquipoV());
+                    $equipoL->setGf($partido->getGL());
+                    $equipoL->setGc($partido->getGV());
+                    $equipoV->setGf($partido->getGV());
+                    $equipoV->setGc($partido->getGL());
+                    if($partido->getGL() > $partido->getGV()){
+                        $equipoL->setPuntos(3);
+                        $equipoV->setPuntos(0);
+                    }elseif ($partido->getGL() < $partido->getGV()) {
+                        $equipoL->setPuntos(0);
+                        $equipoV->setPuntos(3);
+                    }else{
+                        $equipoL->setPuntos(1);
+                        $equipoV->setPuntos(1);
+                    }
+                }
+            }
+        }
+        $clasificacion = [];
+        while($equipo = $this->equipos->iterate()){
+            $golAverage = $equipo->getGf()- $equipo->getGc();
+            $clasificacion []=['Nombre'=> $equipo->getNombre() ,'GF'=> $equipo->getGf() ,'GC'=> $equipo->getGc() ,'GA'=> $golAverage ,'Puntos'=> $equipo->getPuntos() ];
+        }
+       
+        $columna_puntos = array_column($clasificacion, 'Puntos');
+        $columna_average = array_column($clasificacion, 'GA');
+        
+        array_multisort($columna_puntos,SORT_DESC,$columna_average,SORT_DESC,$clasificacion);
+        $columna_nombres = array_column($clasificacion, 'Nombre');
+        $posicion_descanso = array_search('Descanso', $columna_nombres);
+        unset($clasificacion[$posicion_descanso]);
+        return $clasificacion;
+    }
 
-
+    
 }

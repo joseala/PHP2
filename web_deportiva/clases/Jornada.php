@@ -37,8 +37,13 @@ class Jornada {
         $this->partidos = $partidos;
     }
     
-    public function actualizapartido($resultados) {
-        
+    public function actualizaPartido($resultados) {
+        foreach ($resultados as $x => $partido) {
+            $partidoGuardado = $this->partidos->getByProperty('id', $partido['id']);
+            $partidoGuardado->setGL($partido['gL']);
+            $partidoGuardado->setGV($partido['gV']);
+            
+        }
     }
 
 

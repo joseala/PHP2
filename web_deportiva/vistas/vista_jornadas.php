@@ -19,7 +19,8 @@ and open the template in the editor.
         }
         echo"</table>";
         echo "<input type='submit' value='Ver' name='ver'>";
-        echo "<input type='submit' value='Volver' name='volver'>";
+        echo "<input type='submit' value='Salir' name='salir'>";
+        echo "<input type='submit' value='Clasificacion' name='clasificacion'>";
         echo "</form>";
         ?>
 

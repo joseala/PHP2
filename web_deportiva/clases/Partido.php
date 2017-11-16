@@ -1,7 +1,5 @@
 <?php
-
-
-
+ 
 class Partido {
 
     private $id;
