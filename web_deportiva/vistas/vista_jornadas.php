@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
+    <a href="vista_partidos.php"></a>
         <meta charset="UTF-8">
         <title></title>
     </head>

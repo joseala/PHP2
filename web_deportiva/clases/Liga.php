@@ -63,7 +63,7 @@ class Liga {
             for ($j = 0; $j < count($visitantes); $j++) {
                 $liga[$i][$j]['local'] = $locales[$j];
                 $liga[$i][$j]['visitante'] = $visitantes[$j];
-                $partido = new Partido($j+1, $locales[$j],"",$visitantes[$j],""); 
+                $partido = new Partido($j+1, $this->equipos->getByProperty("nombre", $locales[$j]),"",$this->equipos->getByProperty("nombre", $visitantes[$j]),""); 
                 $miJornada->getPartidos()->add($partido);
             }
             $this->jornadas->add($miJornada);
@@ -79,7 +79,7 @@ class Liga {
             foreach ($jornada as $partido) {
                 $local = $partido['visitante'];
                 $visitante = $partido['local'];
-                $partido = new Partido($j+=1,$visitante,"",$local,"");      
+                $partido = new Partido($j+=1,$this->equipos->getByProperty("nombre", $visitante),"",$this->equipos->getByProperty("nombre", $local),"");      
                 $miJornada->getPartidos()->add($partido);   
                 
             }
