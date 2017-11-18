@@ -16,15 +16,15 @@ and open the template in the editor.
         $x = 0;
         while($partido = $jornada->getpartidos()->iterate()){        
             echo "<tr>";
-            echo "<td><input type='hidden' value='".$partido->getId()."' name='resultados[$x][id]'><input type='text' readonly name='resultado[$x][eqL]' value='".$partido->getEquipoL()."'</td>";
-            if($partido->getEquipoL() == "Descanso" || $partido->getEquipoV() == "Descanso"){
+            echo "<td><input type='hidden' value='".$partido->getId()."' name='resultados[$x][id]'><input type='text' readonly name='resultado[$x][eqL]' value='".$partido->getEquipoL()->getNombre()."'</td>";
+            if($partido->getEquipoL()->getNombre() == "Descanso" || $partido->getEquipoV()->getNombre() == "Descanso"){
                  echo "<td><input type='text' readonly value='descanso' name='resultados[$x][gL]'></td>";
             }else{
                 echo "<td><input type='number' value='".$partido->getgV()."' name='resultados[$x][gL]'></td>";
             }
             
-            echo "<td><input type='text' readonly name='resultado[$x][eqV]' value='".$partido->getEquipoV()."'</td>";
-            if($partido->getEquipoL() == "Descanso" || $partido->getEquipoV() == "Descanso"){
+            echo "<td><input type='text' readonly name='resultado[$x][eqV]' value='".$partido->getEquipoV()->getNombre()."'</td>";
+            if($partido->getEquipoL()->getNombre() == "Descanso" || $partido->getEquipoV()->getNombre() == "Descanso"){
                  echo "<td><input type='text' readonly value='descanso' name='resultados[$x][gV]'></td>";
             }else{
                 echo "<td><input type='number' value='".$partido->getgL()."'name='resultados[$x][gV]'></td>";

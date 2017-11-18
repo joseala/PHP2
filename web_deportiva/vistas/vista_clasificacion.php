@@ -24,12 +24,12 @@ and open the template in the editor.
             <tbody>
                 <?php 
                 $posicion = 1;
-                foreach ($clasificacion as $x => $equipo) { 
+                foreach ($clasificacion as $nombre => $equipo) { 
                     
                 ?>
                 <tr>
                     <td> <?= $posicion; ?> </td>
-                    <td><?= $equipo['Nombre']; ?></td>
+                    <td><?= $nombre; ?></td>
                     <td><?= $equipo['GF']; ?></td>
                     <td><?= $equipo['GC']; ?></td>
                     <td><?= $equipo['GA']; ?></td>

@@ -45,6 +45,24 @@ class Jornada {
             
         }
     }
+    public function clasificacionJornada() {
+        $clasificacion = [];
+        while ($partido = $this->partidos->iterate()){
+            if(is_numeric($partido->getGL())){              
+                if($partido->getGL() > $partido->getGV()){
+                    $clasificacion [$partido->getEquipoL()->getNombre()]=['GF'=> $partido->getGL() ,'GC'=> $partido->getGV() ,'Puntos'=> 3 ];
+                    $clasificacion [$partido->getEquipoV()->getNombre()]=['GF'=> $partido->getGV() ,'GC'=> $partido->getGL() ,'Puntos'=> 0 ];      
+                }elseif ($partido->getGL() < $partido->getGV()) {
+                    $clasificacion [$partido->getEquipoL()->getNombre()]=['GF'=> $partido->getGL() ,'GC'=> $partido->getGV() ,'Puntos'=> 0 ];
+                    $clasificacion [$partido->getEquipoV()->getNombre()]=['GF'=> $partido->getGV() ,'GC'=> $partido->getGL() ,'Puntos'=> 3 ];
+                }else{
+                   $clasificacion [$partido->getEquipoL()->getNombre()]=['GF'=> $partido->getGL() ,'GC'=> $partido->getGV() ,'Puntos'=> 1 ];
+                   $clasificacion [$partido->getEquipoV()->getNombre()]=['GF'=> $partido->getGV() ,'GC'=> $partido->getGL() ,'Puntos'=> 1 ];
+                }
+            }
+        }
+         return $clasificacion;   
+    }
 
-
+   
 }
