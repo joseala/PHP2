@@ -1,0 +1,14 @@
+perro
+gato
+elefante
+papel
+piedra
+barco
+avion
+jirafa
+caliz
+volante
+submarino
+ninja
+esternocleidomastoideo
+vericueto
