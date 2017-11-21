@@ -180,14 +180,17 @@ class Partida {
     public function crearXml($idPartida){
         $pruebaXml = <<<XML
 <?xml version="1.0" encoding="UTF-8" ?>
-<partida></partida>
+<IdPartida></IdPartida>
 XML;
 $miPartida = new SimpleXMLElement($pruebaXml);//Crea un nuevo objeto SimpleXMLElement
+        $miPartida->addAttribute('id', $idPartida);//Añade un elemento hijo al nodo XML
+        
+        
         while( $jugada = $this->jugadas->iterate()){
-            $miPartida->addChild('IdPartida', $idPartida);//Añade un elemento hijo al nodo XML
-            $miPartida->addChild('IdJugada', $jugada->getIdJugada());
-            $miPartida->addChild('PalabraEncontrada', $jugada->getSolucionada());
-            $miPartida->addChild('Letra',$jugada->getLetra());
+            $jugadas = $miPartida->addChild('Jugada');
+            $jugadas->addAttribute('id',$jugada->getIdJugada());
+            $acierto = $jugadas->addChild('PalabraEncontrada', $jugada->getSolucionada());
+            $acierto = $jugadas->addChild('Letra',$jugada->getLetra());
         }
         $miFichero = $miPartida->asXML();//Retorna un string XML correcto basado en un elemento SimpleXML
         $miArchivo = fopen("xml/miPartida.xml", "w+");//Abre un fichero o un URL

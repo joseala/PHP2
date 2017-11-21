@@ -10,24 +10,27 @@ if(isset($_SESSION['usuario'])){
     if(isset($_POST['nuevo'])){//Nuevo juego,genera palabra oculta,crea nueva partida.
         $usuario = $_SESSION['usuario'];
         $_SESSION['partida'] = new Partida();
-        $_SESSION['partida']->persist($dbh, $usuario->getId());
-        $_SESSION['usuario']->getPartidas()->add($_SESSION['partida']);
+        $partida = $_SESSION['partida'];
+        $partida->persist($dbh, $usuario->getId());
+        $usuario->getPartidas()->add($partida);
         include 'vistas/vistaJuego.php';
     }elseif(isset ($_POST['jugar'])){//Accede con juego comenzado,comprueba letra,actualiza letras usadas,persiste jugada actual y partida.
         $letra = strtolower($_POST['letra']);
         $jugada = new Jugada($letra);
-        $esFin = $_SESSION['partida']->compruebaJugada($dbh,$jugada);
-        $_SESSION['partida']->persist($dbh, $_SESSION['usuario']->getId());
+        $partida = $_SESSION['partida'];
+        $usuario = $_SESSION['usuario'];
+        $esFin = $partida->compruebaJugada($dbh,$jugada);
+        $partida->persist($dbh, $usuario->getId());
         if($esFin){
             include 'vistas/vistaVictoria.php';
         }else{
-            if($_SESSION['partida']->getPerdida()){
+            if($partida->getPerdida()){
                 //Borra partida perdida de coleccion
-                $_SESSION['usuario']->getPartidas()->removeByProperty('idPartida', $_SESSION['partida']->getIdPartida());
+                $usuario->getPartidas()->removeByProperty('idPartida', $partida->getIdPartida());
                 //Borra partida perdida de base de datos
-                $_SESSION['partida']->delete($dbh,$_SESSION['partida']->getIdPartida());
+                $partida->delete($dbh,$partida->getIdPartida());
                 //Borra jugadas de partida perdida de base de datos
-                $jugada->delete($dbh,$_SESSION['partida']->getIdPartida());
+                $jugada->delete($dbh,$partida->getIdPartida());
                 include 'vistas/vistaDerrota.php';
             }else{
                 include 'vistas/vistaJuego.php';
@@ -35,8 +38,9 @@ if(isset($_SESSION['usuario'])){
         }
     }elseif (isset ($_POST['recuperar'])) {//Recupera partidas empezadas y no acabadas.
         if(!empty($_POST["idPartida"])){
-            $id = $_POST["idPartida"];
-            $_SESSION['partida'] = $_SESSION['usuario']->getPartidas()->getByProperty('idPartida', $id);
+            $id = $_POST["idPartida"];        
+            $usuario = $_SESSION['usuario'];
+            $_SESSION['partida'] = $usuario->getPartidas()->getByProperty('idPartida', $id);
             include 'vistas/vistaJuego.php';
         }else{
             include 'vistas/vistaMenu.php';  
@@ -49,7 +53,7 @@ if(isset($_SESSION['usuario'])){
     }else if (isset($_POST['resumen'])){//Genera fichero XML y muestra vista XML 
         if(!empty($_POST["idPartida"])){
             $id = $_POST["idPartida"];  
-            $_SESSION['partida'] = Partida::getByIdPartida($dbh,$id);
+            $_SESSION['partida'] = Partida::getByIdPartida($dbh,$id);//Retorno partida buscandola por su id.
             $_SESSION['partida']->crearXml($id);
             include 'vistas/vistaXml.php';
         }else{
@@ -76,8 +80,8 @@ if(isset($_SESSION['usuario'])){
     }elseif(isset ($_POST['registro'])){//Envia a formulario registro
         include 'vistas/registro.php';       
     }elseif(isset ($_POST['registrarse'])){//Registra usuario y comprueba si ha sido persistido en la base de datos.
-        $nombre = htmlspecialchars($_POST['nombre']);
-        $pass = md5(htmlspecialchars($_POST['pass']));  
+        $nombre = filter_input(INPUT_POST,'nombre',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $pass = md5(filter_input(INPUT_POST,'pass',FILTER_SANITIZE_FULL_SPECIAL_CHARS));  
         $usuario = new Usuario($nombre,$pass); 
         try{
             $usuario->persist($dbh);
