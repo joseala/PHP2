@@ -26,11 +26,11 @@ if(isset($_SESSION['usuario'])){
         }else{
             if($partida->getPerdida()){
                 //Borra partida perdida de coleccion
-                $usuario->getPartidas()->removeByProperty('idPartida', $partida->getIdPartida());
+                //$usuario->getPartidas()->removeByProperty('idPartida', $partida->getIdPartida());
                 //Borra partida perdida de base de datos
-                $partida->delete($dbh,$partida->getIdPartida());
+                //$partida->delete($dbh,$partida->getIdPartida());
                 //Borra jugadas de partida perdida de base de datos
-                $jugada->delete($dbh,$partida->getIdPartida());
+                //$jugada->delete($dbh,$partida->getIdPartida());
                 include 'vistas/vistaDerrota.php';
             }else{
                 include 'vistas/vistaJuego.php';
@@ -54,7 +54,7 @@ if(isset($_SESSION['usuario'])){
         if(!empty($_POST["idPartida"])){
             $id = $_POST["idPartida"];  
             $_SESSION['partida'] = Partida::getByIdPartida($dbh,$id);//Retorno partida buscandola por su id.
-            $_SESSION['partida']->crearXml($id);
+            $_SESSION['partida']->crearXml();
             include 'vistas/vistaXml.php';
         }else{
             include 'vistas/vistaMenu.php';

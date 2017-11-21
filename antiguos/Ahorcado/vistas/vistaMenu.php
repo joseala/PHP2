@@ -34,11 +34,27 @@ and open the template in the editor.
             echo "</table>";
             echo "<input type='submit' value='Recuperar' name='recuperar'>";
             echo"<br>"; 
-            echo "<h1>Partidas acabadas:</h1><br>";
+            echo "<h1>Partidas Ganadas:</h1><br>";
             echo "<table>";
-            while($partidas = $_SESSION['usuario']->getPartidas()->iterate()){
-                $a = $partidas;
-                if($partidas->getAcabada()){
+            while($partida = $_SESSION['usuario']->getPartidas()->iterate()){
+                $a = $partida;
+                if($partida->getAcabada() && !$partida->getPerdida()){
+                    echo "<tr><td><input type='radio' name='idPartida' value=".$a->getIdPartida().">".$a->getIdPartida()."</td>";
+                    echo"<td background:'red'></td>";
+                    $x= count(str_split($a->getSolucionada()));
+                    for($y=0;$y < $x;$y++){
+                        echo "<td>".$a->getSolucionada()[$y]."</td>";
+                    }
+                    echo "</tr>";
+                }
+            }
+            echo "</table>";
+            echo"<br>"; 
+            echo "<h1>Partidas Perdidas:</h1><br>";
+            echo "<table>";
+            while($partida = $_SESSION['usuario']->getPartidas()->iterate()){
+                $a = $partida;
+                if($partida->getPerdida()){
                     echo "<tr><td><input type='radio' name='idPartida' value=".$a->getIdPartida().">".$a->getIdPartida()."</td>";
                     echo"<td background:'red'></td>";
                     $x= count(str_split($a->getSolucionada()));

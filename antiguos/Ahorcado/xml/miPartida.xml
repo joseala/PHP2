@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<IdPartida id="70">
-    <Jugada id="341">
-        <PalabraEncontrada>________</PalabraEncontrada>
-        <Letra>s</Letra>
-    </Jugada>
-    <Jugada id="342">
+<IdPartida id="72">
+    <Jugada id="352">
         <PalabraEncontrada>e_e____e</PalabraEncontrada>
         <Letra>e</Letra>
+    </Jugada>
+    <Jugada id="353">
+        <PalabraEncontrada>e_e____e</PalabraEncontrada>
+        <Letra>r</Letra>
+    </Jugada>
+    <Jugada id="354">
+        <PalabraEncontrada>e_e____e</PalabraEncontrada>
+        <Letra>q</Letra>
+    </Jugada>
+    <Jugada id="355">
+        <PalabraEncontrada>e_e____e</PalabraEncontrada>
+        <Letra>z</Letra>
+    </Jugada>
+    <Jugada id="356">
+        <PalabraEncontrada>e_e____e</PalabraEncontrada>
+        <Letra>x</Letra>
+    </Jugada>
+    <Jugada id="357">
+        <PalabraEncontrada>e_e____e</PalabraEncontrada>
+        <Letra>m</Letra>
+    </Jugada>
+    <Jugada id="358">
+        <PalabraEncontrada>e_e___te</PalabraEncontrada>
+        <Letra>t</Letra>
+    </Jugada>
+    <Jugada id="359">
+        <PalabraEncontrada>e_e___te</PalabraEncontrada>
+        <Letra>y</Letra>
     </Jugada>
 </IdPartida>

@@ -109,6 +109,7 @@ class Partida {
             $this->intentos++;
             if($this->intentos >= self::PIERDE){
                 $this->perdida = true;
+                $this->acabada = true;
             }
         }
         $x=0;
@@ -177,13 +178,13 @@ class Partida {
             }
         }
     }
-    public function crearXml($idPartida){
+    public function crearXml(){
         $pruebaXml = <<<XML
 <?xml version="1.0" encoding="UTF-8" ?>
 <IdPartida></IdPartida>
 XML;
 $miPartida = new SimpleXMLElement($pruebaXml);//Crea un nuevo objeto SimpleXMLElement
-        $miPartida->addAttribute('id', $idPartida);//Añade un elemento hijo al nodo XML
+        $miPartida->addAttribute('id', $this->idPartida);//Añade un elemento hijo al nodo XML
         
         
         while( $jugada = $this->jugadas->iterate()){

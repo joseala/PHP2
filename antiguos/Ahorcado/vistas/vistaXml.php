@@ -15,14 +15,19 @@ and open the template in the editor.
     <?php 
     $jugadas = $_SESSION['partida']->getJugadas();
     $idPartida = $_SESSION['partida']->getIdPartida();
+    echo '<ul>';
+    echo "<li> Id Partida: ".$idPartida."</li>";
     while($jugada = $jugadas->iterate()){ 
-        echo '<ul>';
-        echo "<li> Id Partida: ".$idPartida."</li>";
-        echo "<li> Id Jugada: ".$jugada->getIdJugada()."</li>";
-        echo "<li> Palabra encontrada: ".$jugada->getSolucionada()."</li>";
-        echo "<li> Letra : ".$jugada->getLetra()."</li>";
-        echo '</ul>';
-    }?>
+        echo "<li>";  
+            echo '<ul>';
+            echo "<li> Id Jugada: ".$jugada->getIdJugada()."</li>";
+            echo "<li> Palabra encontrada: ".$jugada->getSolucionada()."</li>";
+            echo "<li> Letra : ".$jugada->getLetra()."</li>";
+            echo '</ul>';
+        echo "</li>";  
+    }
+    echo '</ul>'; 
+    ?>
     <input type="submit" name="volver" value="Volver">
     <input type="submit" name="salir" value="Salir">
 </form>
