@@ -10,12 +10,15 @@ class Liga {
     private $jornadas;
     private $equipos;
     
-    public function __construct($nombre = null,$jornadas = null, $equipos = null) {
+    public function __construct($nombre = null,$array_equipos) {
         
         $this->nombre = $nombre;
         $this->jornadas = new Collection();
         $this->equipos = new Collection();
-        
+        foreach ($array_equipos as $x => $equipo) {
+            $this->equipos->add(new Equipo(trim($equipo),$x+1));
+        }
+        self::creaJornadas();
     }
     function getNombre() {
         return $this->nombre;
@@ -58,32 +61,38 @@ class Liga {
             
             $fecha = strtotime ( '+7 day' , strtotime ( $fecha ) ) ;
             $fecha = date ( 'Y-m-j' , $fecha );
-            $miJornada = new Jornada($i+1,$fecha);
-            
+            //$miJornada = new Jornada($i+1,$fecha);
             for ($j = 0; $j < count($visitantes); $j++) {
                 $liga[$i][$j]['local'] = $locales[$j];
                 $liga[$i][$j]['visitante'] = $visitantes[$j];
-                $partido = new Partido($j+1, $this->equipos->getByProperty("nombre", $locales[$j]),"",$this->equipos->getByProperty("nombre", $visitantes[$j]),""); 
-                $miJornada->getPartidos()->add($partido);
+                $partidosIda[] = ["id" => $j+1, "local" => $locales[$j],"gl" => "", "visitante" => $visitantes[$j], "gv" => "" ];
+                
+                //$partido = new Partido($j+1, $this->equipos->getByProperty("nombre", $locales[$j]),"",$this->equipos->getByProperty("nombre", $visitantes[$j]),""); 
+                //$miJornada->getPartidos()->add($partido);
             }
+            $miJornada =  new Jornada($i+1,$fecha,$partidosIda, $this->equipos);
             $this->jornadas->add($miJornada);
             $equipoBase = array_shift($equipos);
             array_unshift($equipos, array_pop($equipos));
             array_unshift($equipos, $equipoBase);
+            unset($partidosIda);
         }
         
         foreach ($liga as $jornada) {
             $fecha = strtotime ( '+7 day' , strtotime ( $fecha ) ) ;
             $fecha = date ( 'Y-m-j' , $fecha );
-            $miJornada = new Jornada($i+=1, $fecha);          
+            //$miJornada = new Jornada($i+=1, $fecha);          
             foreach ($jornada as $partido) {
                 $local = $partido['visitante'];
                 $visitante = $partido['local'];
-                $partido = new Partido($j+=1,$this->equipos->getByProperty("nombre", $visitante),"",$this->equipos->getByProperty("nombre", $local),"");      
-                $miJornada->getPartidos()->add($partido);   
+                $partidosVuelta[] = ["id" => $j+1, "local" => $visitante,"gl" => "", "visitante" => $local, "gv" => "" ];
+                //$partido = new Partido($j+=1,$this->equipos->getByProperty("nombre", $visitante),"",$this->equipos->getByProperty("nombre", $local),"");      
+                //$miJornada->getPartidos()->add($partido);   
                 
             }
+            $miJornada =  new Jornada($i+=1,$fecha,$partidosVuelta, $this->equipos);
             $this->jornadas->add($miJornada);
+            unset($partidosVuelta);
         }
         
     }

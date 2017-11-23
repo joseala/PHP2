@@ -8,11 +8,7 @@ if(empty($_POST) || isset($_POST['salir'])){
     $equipos = $_POST['equipos'];
     $nombre = $_POST['nombre'];
     $array_equipos = explode(",", $equipos);
-    $_SESSION['liga'] = new Liga($nombre);
-    foreach ($array_equipos as $x => $equipo) {
-        $_SESSION['liga']->setEquipos(new Equipo(trim($equipo),$x+1));
-    }
-    $_SESSION['liga']->creaJornadas();
+    $_SESSION['liga'] = new Liga($nombre,$array_equipos);
     include 'vistas/vista_jornadas.php';    
 } elseif(isset ($_POST['ver'])) {
     $idJornada = $_POST['id'];
