@@ -59,8 +59,21 @@ class Usuario {
         $persistido = $persistir->execute(array(":nombre" => $this->nombre, ":pass" => $this->pass, ":correo" => $this->correo));
         if($persistido){
             $this->setId($dbh->lastInsertId());
+        }else{
+            throw new Exception;
         }
-        return $persistido;
     }
-    
+    public function crearCarro($dbh) {       
+        $carro = new Carro($this->id, date("Y-m-d"));
+        $carro->persist($dbh);   
+    }
+    public function getCarro($dbh) {
+        
+        $query = "SELECT * FROM carro WHERE idUsuario = :idUsuario";
+        $consulta = $dbh->prepare($query);
+        $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Carro");
+        $consulta->execute(array(":idUsuario" => $this->id ));
+        $carro = $consulta->fetch();
+        return $carro;
+    }
 }

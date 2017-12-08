@@ -25,10 +25,10 @@ and open the template in the editor.
                     <?php foreach ($productos as $y => $producto) { ?>
                         <tr>
                             <td>Foto</td>
-                            <td><input type='text' readonly value="<?php $producto->getId(); ?>" name="compras[<?php $y; ?>]['id']"</td>
+                            <?php echo "<td><input type='text' readonly value='".$producto->getId()."' name='compras[$y][id]'></td>" ?>
                             <td><?= $producto->getDenominacion(); ?></td>
                             <td><?= $producto->getPrecio(); ?></td>
-                            <td><select name="compras[<?php $y; ?>]['cantidad']">
+                            <?php echo "<td><select name='compras[$y][cantidad]'>" ?>
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>

@@ -43,5 +43,14 @@ class Producto {
         return $productos;
         
     }
+    public function getProductoById($dbh, $id) {
+        $query = "SELECT * FROM producto WHERE id = :id";
+        $consulta = $dbh->prepare($query);
+        $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Producto");
+        $consulta->execute(array(":id" => $id));
+        $producto = $consulta->fetch();
+        return $producto;
+        
+    }
 
 }
