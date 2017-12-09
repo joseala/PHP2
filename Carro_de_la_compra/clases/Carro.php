@@ -68,6 +68,8 @@ class Carro {
                     $query = "UPDATE linea SET  cantidad = :cantidad WHERE idProducto = :idProducto AND idCarro = :idCarro";
                     $persist = $dbh->prepare($query);
                     $persist->execute(array("cantidad" => $compras[$y]['cantidad'], ":idProducto" => $compras[$y]['id'],":idCarro" => $this->id ));
+                    $this->lineas->add($existe->getId());
+                    
                 }else{                   
                     $lineaNueva = new Linea($compras[$y]['id'], $compras[$y]['cantidad'], $this->id);
                     $lineaNueva->persist($dbh);

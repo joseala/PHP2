@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Carro id="7"><Linea id="17"><Producto>producto 3</Producto><Precio>75</Precio><cantidad>1</cantidad></Linea></Carro>
+<Carro id="10"><Linea id="23"><Producto>producto 1</Producto><Precio>100</Precio><cantidad>1</cantidad></Linea><Linea id="24"><Producto>producto 2</Producto><Precio>50</Precio><cantidad>2</cantidad></Linea><Linea id="25"><Producto>producto 3</Producto><Precio>75</Precio><cantidad>4</cantidad></Linea><Linea id="26"><Producto>producto 4</Producto><Precio>62</Precio><cantidad>1</cantidad></Linea><Linea id="27"><Producto>producto 5</Producto><Precio>34</Precio><cantidad>2</cantidad></Linea></Carro>

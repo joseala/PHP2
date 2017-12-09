@@ -27,8 +27,13 @@ if(isset($_SESSION['usuario'])){
     }elseif (isset($_POST['nuevo'])) {
         $_SESSION['carro']->deleteLineas($dbh);
         include 'vistas/vista_menu.php';
-    }else{
+    }elseif(isset($_POST['productos'])){
         include 'vistas/vista_producto.php';
+    }else{
+        unset($_SESSION['usuario']);
+        unset($_SESSION['carro']);
+        unset($_SESSION['productos']);
+        include 'vistas/vista_formulario.php';
     }
 }else{
     if(empty($_POST)){        
