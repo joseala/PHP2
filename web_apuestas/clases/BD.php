@@ -2,7 +2,7 @@
 class BD
 {
     const BD_SERVIDOR = "localhost";
-    const BD_NOMBRE = "carro_compra";
+    const BD_NOMBRE = "apuestas";
     const BD_USUARIO = "root";
     const BD_PASSWORD = "";
 

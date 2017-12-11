@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resultados>
-    <partido id="1">
+    <partido id="0">
         <resultado>0-0</resultado>
+        <ratio>2</ratio>
+    </partido>
+    <partido id="1">
+        <resultado>2-1</resultado>
+        <ratio>5</ratio>
     </partido>
     <partido id="2">
-        <resultado>2-1</resultado>
+        <resultado>3-2</resultado>
+        <ratio>3,5</ratio>
     </partido>
     <partido id="3">
-        <resultado>3-2</resultado>
+        <resultado>1-3</resultado>
+        <ratio>5,5</ratio>
     </partido>
     <partido id="4">
         <resultado>1-3</resultado>
-    </partido>
-    <partido id="5">
-        <resultado>0-3</resultado>
+        <ratio>4,5</ratio>
     </partido>
 </resultados>
