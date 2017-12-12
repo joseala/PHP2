@@ -28,6 +28,15 @@ if(isset($_SESSION['usuario'])){
     }elseif (isset($_POST['salir'])) {
         unset($_SESSION['usuario']);
         include 'vistas/vista_login.php';
+    }elseif (isset($_POST['salirApuestas'])) {
+        $_SESSION['usuario']->deleteApuestas($dbh);
+        unset($_SESSION['usuario']);
+        include 'vistas/vista_login.php';
+    }elseif (isset($_POST['cobrar'])) {
+        $_SESSION['usuario']->deleteApuestas($dbh);
+
+        $mensaje = "Apuestas cobradas";
+        include 'vistas/vista_menu.php';
     }else{
         $mensaje = "Haz tus apuestas";
         include 'vistas/vista_menu.php';

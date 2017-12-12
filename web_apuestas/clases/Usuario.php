@@ -78,11 +78,16 @@ class Usuario {
             $apuesta = $this->apuestas->getByProperty("idPartido", $y);
             if($apuesta){
                 $premio = $apuesta->calcularPremio($resultado);
-                $premios[$apuesta->getIdPartido()]= ["resultado" => $resultado['resultado'], "premio" => $premio];
+                $premios[$apuesta->getIdPartido()]= ["resultado" => $resultado['resultado'],"apuesta" => $apuesta->getResultado() ,"premio" => $premio];
             }
             
         }
         return $premios;
+    }
+    public function deleteApuestas($dbh) {
+        $query = "DELETE FROM apuesta WHERE idUsuario = :idUsuario";
+        $delete = $dbh->prepare($query);
+        $delete->execute(array("idUsuario" => $this->id));    
     }
 
 }

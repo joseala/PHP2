@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1>Bienvenido <?= $_SESSION['usuario']->getNombre()?> </h1>
-        <h1>Bienvenido <?= $mensaje ?> </h1>
+        <h1><?= $mensaje ?> </h1>
         <h1>Estas son las apuestas:</h1>
         <form action="index.php" method="POST">
             <table border="1">
