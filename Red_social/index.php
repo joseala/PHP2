@@ -19,14 +19,11 @@ if(isset($_SESSION['usuario'])){
         include "vistas/vista_resumen.php"; 
     }elseif (isset($_POST['seguir'])) {
         $id = $_POST['id'];
-        if(!$_SESSION['usuario']->getSeguidos()->getByProperty("idUsuario", $id)){//Si es un usuario ya seguido no entra.
-            $seguido = new Seguido($id, $_SESSION['usuario']->getId());
-            $seguido->persist($dbh);
-            $_SESSION['usuario']->getSeguidos()->add($seguido);//Añade usuario a coleccion de seguidos.
-            $_SESSION['usuario']->getNoSeguidos()->removeByProperty("id", $id);//Borra usuario en coleccion de no seguidos.
-            $_SESSION['usuario']->getFrases()->removeAll();//Borra todas la frases de la coleccion.
-            $_SESSION['usuario']->recuperaFrases($dbh);//Recupera la ultima frase de cada usuario y la añade a la coleccion de frases. 
-        }  
+        $seguido = new Seguido($id, $_SESSION['usuario']->getId());
+        $seguido->persist($dbh);
+        $_SESSION['usuario']->getSeguidos()->removeAll();//Borra la coleccion
+        $_SESSION['usuario']->recuperaSeguidos($dbh);//Añade usuarios a la coleccion incluyendo el ultimo añadido.
+        $_SESSION['usuario']->getNoSeguidos()->removeByProperty("id", $id);//Borra usuario en coleccion de no seguidos.        
         include "vistas/vista_perfil.php"; 
     }elseif (isset($_POST['salir'])) {
         unset($_SESSION['usuario']);
@@ -50,7 +47,6 @@ if(isset($_SESSION['usuario'])){
             $_SESSION['usuario'] = $usuario;
             $_SESSION['usuario']->recuperaSeguidos($dbh);
             $_SESSION['usuario']->recuperaNoSeguidos($dbh);
-            $_SESSION['usuario']->recuperaFrases($dbh);
             include "vistas/vista_perfil.php";           
         }else{
             $mensaje = "Usuario no encontrado,registrese";

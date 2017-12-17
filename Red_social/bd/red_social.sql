@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-12-2017 a las 18:52:38
+-- Tiempo de generación: 17-12-2017 a las 22:09:13
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -37,15 +37,15 @@ CREATE TABLE `frase` (
 --
 
 INSERT INTO `frase` (`id`, `idUsuario`, `texto`) VALUES
-(1, 3, 'fgjgg'),
-(2, 3, 'sdfhkjhdsfkjdsf '),
-(3, 5, 'fgdgdgdsdgsdgs'),
-(4, 5, 'agaggga'),
-(5, 3, 'mi ultima frase'),
-(6, 4, 'mi ultimisiama frase'),
-(7, 5, 'esta si que es la ultima'),
-(8, 6, 'holaaaaaaaaaaaaaaaaaaaa'),
-(9, 6, 'feliz navidad');
+(11, 4, 'holaaaaaaaaaaaaaa'),
+(12, 4, 'ultima'),
+(13, 3, 'alalal'),
+(14, 3, 'kldkdldkld'),
+(15, 3, 'ultima jose'),
+(16, 7, 'eeeeeeeeeooo'),
+(17, 8, 'aaaaaaaaaa'),
+(18, 8, 'mmmmmmmmmmm'),
+(19, 8, 'esta es la uuuultima');
 
 -- --------------------------------------------------------
 
@@ -69,7 +69,19 @@ INSERT INTO `seguido` (`id`, `idUsuario`, `idSeguido`) VALUES
 (10, 5, 4),
 (11, 4, 5),
 (12, 6, 7),
-(13, 6, 3);
+(13, 6, 3),
+(14, 3, 4),
+(15, 6, 4),
+(16, 7, 4),
+(17, 3, 8),
+(18, 4, 8),
+(19, 5, 8),
+(20, 6, 8),
+(21, 7, 3),
+(22, 8, 3),
+(23, 3, 7),
+(24, 4, 7),
+(25, 8, 7);
 
 -- --------------------------------------------------------
 
@@ -92,7 +104,8 @@ INSERT INTO `usuario` (`id`, `nombre`, `pass`) VALUES
 (4, 'pepe', '81dc9bdb52d04dc20036dbd8313ed055'),
 (5, 'manuel', '81dc9bdb52d04dc20036dbd8313ed055'),
 (6, 'paco', '81dc9bdb52d04dc20036dbd8313ed055'),
-(7, 'julia', '81dc9bdb52d04dc20036dbd8313ed055');
+(7, 'julia', '81dc9bdb52d04dc20036dbd8313ed055'),
+(8, 'Miguel', '81dc9bdb52d04dc20036dbd8313ed055');
 
 --
 -- Índices para tablas volcadas
@@ -124,17 +137,17 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `frase`
 --
 ALTER TABLE `frase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT de la tabla `seguido`
 --
 ALTER TABLE `seguido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

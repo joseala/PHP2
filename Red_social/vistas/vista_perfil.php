@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -20,14 +15,18 @@ and open the template in the editor.
         <h1>RED SOCIAL</h1>
         <h2>Bienvenido <?= $_SESSION['usuario']->getNombre();?></h2>
         </fieldset>
-        <?php while ($frase = $_SESSION['usuario']->getFrases()->iterate()){   
-            echo "<fieldset>";
-            echo "<h3>Usuario: ".$_SESSION['usuario']->getSeguidos()->getByProperty("id", $frase->getIdUsuario())->getNombre()."</h3>";
-            echo "<h3>Ultimo comentario: ".$frase->getTexto()."</h3>";
-            echo "</fieldset>";
-            echo "<br>";
-        } ?>
-        
+        <?php while ($usuario = $_SESSION['usuario']->getSeguidos()->iterate()){  ?>
+                    <fieldset>
+                    <h3>Usuario: <?= $usuario->getNombre(); ?></h3>
+                <?php if($usuario->getFrases()->getNumObjects()){?>
+                        <h3>Ultimo comentario: <?= $usuario->getFrases()->getLast()->getTexto(); ?></h3>
+                        
+                <?php } else{ ?>
+                            <h3>Ultimo comentario: No hay comentarios</h3>
+                    <?php } ?>
+                    </fieldset>
+                    <br>
+        <?php } ?>       
             <form action="index.php" method="POST">
                 <div class="botones">
                     <input type="submit" name="perfiles" value="Mas perfiles">
@@ -35,7 +34,6 @@ and open the template in the editor.
                     <input type="submit" name="resumen" value="Resumen seguidos">
                     <input type="submit" name="salir" value="Salir">
                 </div>
-            </form>
-        
+            </form>      
     </body>
 </html>

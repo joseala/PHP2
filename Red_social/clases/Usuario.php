@@ -102,6 +102,7 @@ class Usuario {
            $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Usuario");
            $consulta->execute(array(":id" => $seguido->getIdUsuario()));
            $usuario = $consulta->fetch();
+           $usuario->recuperaFrases($dbh);
            $this->seguidos->add($usuario);
        }
    }
@@ -135,19 +136,30 @@ class Usuario {
       
    }
    public function recuperaFrases($dbh) {
-       while($seguido = $this->seguidos->iterate()){
-            $query = "SELECT * FROM frase WHERE idUsuario = :id";
-            $consulta = $dbh->prepare($query);
-            $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Frase");
-            $consulta->execute(array(":id" => $seguido->getId()));
-            $frases = $consulta->fetchAll();
-            $tamanio = count($frases);
-            if($tamanio != 0){
-                $this->frases->add($frases[$tamanio-1]); 
-            }
-            
-       }
+      
+        $query = "SELECT * FROM frase WHERE idUsuario = :id";
+        $consulta = $dbh->prepare($query);
+        $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Frase");
+        $consulta->execute(array(":id" => $this->id));
+        $frases = $consulta->fetchAll();
+        foreach ($frases as $frase) {       
+           $this->frases->add($frase); 
+        }   
    }
+   
+   public function recuperaFrasesById($dbh, $id) {
+       
+        $query = "SELECT * FROM frase WHERE idUsuario = :id";
+        $consulta = $dbh->prepare($query);
+        $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Frase");
+        $consulta->execute(array(":id" => $id));
+        $frases = $consulta->fetchAll();
+        $tamanio = count($frases);
+        if($tamanio != 0){
+            $this->frases->add($frases[$tamanio-1]); 
+        }
+   }
+   
    public function crearXML($frases) {
        
 $xml = <<<XML
