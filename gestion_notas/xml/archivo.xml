@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profesor id="1">
+    <Alumno nombre="jose">
+        <Nota Asignatura="Matematicas">0</Nota>
+        <Nota Asignatura="Lenguaje">0</Nota>
+        <Nota Asignatura="Ingles">3</Nota>
+    </Alumno>
+    <Alumno nombre="pedro">
+        <Nota Asignatura="Matematicas">2</Nota>
+        <Nota Asignatura="Lenguaje">2</Nota>
+        <Nota Asignatura="Ingles">7</Nota>
+    </Alumno>
+    <Alumno nombre="Marta">
+        <Nota Asignatura="Matematicas">2</Nota>
+        <Nota Asignatura="Lenguaje">0</Nota>
+        <Nota Asignatura="Ingles">5</Nota>
+    </Alumno>
+    <Alumno nombre="Alicia">
+        <Nota Asignatura="Matematicas">3</Nota>
+        <Nota Asignatura="Lenguaje">3</Nota>
+        <Nota Asignatura="Ingles">6</Nota>
+    </Alumno>
+    <Alumno nombre="Sara">
+        <Nota Asignatura="Matematicas">2</Nota>
+        <Nota Asignatura="Lenguaje">0</Nota>
+        <Nota Asignatura="Ingles">8</Nota>
+    </Alumno>
+</Profesor>
