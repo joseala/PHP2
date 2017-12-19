@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RedSocial><Usuario id="4"><frase id="holaaaaaaaaaaaaaa">holaaaaaaaaaaaaaa</frase><frase id="ultima">ultima</frase></Usuario><Usuario id="3"><frase id="alalal">alalal</frase><frase id="kldkdldkld">kldkdldkld</frase><frase id="ultima jose">ultima jose</frase></Usuario></RedSocial>
+<RedSocial Propietario="jose">
+    <Seguido Nombre="pepe">
+        <Frase>holaaaaaaaaaaaaaa</Frase>
+        <Frase>ultima</Frase>
+    </Seguido>
+    <Seguido Nombre="manuel"/>
+    <Seguido Nombre="paco"/>
+    <Seguido Nombre="julia">
+        <Frase>eeeeeeeeeooo</Frase>
+        <Frase>holaaaaaa ultima</Frase>
+    </Seguido>
+    <Seguido Nombre="Miguel">
+        <Frase>aaaaaaaaaa</Frase>
+        <Frase>mmmmmmmmmmm</Frase>
+        <Frase>esta es la uuuultima</Frase>
+    </Seguido>
+</RedSocial>

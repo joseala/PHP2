@@ -76,6 +76,8 @@ class Usuario {
        
    }
    /**
+    * Recupera usuario de BBDD si las
+    * credenciales son correctas.
     * 
     * @param object PDO $dbh
     * @param string $nombre
@@ -90,22 +92,37 @@ class Usuario {
        $usuario = $consulta->fetch();
        return $usuario;
    }
+   /**
+    * Recupera seguidos por usuario.
+    * 
+    * @param PDO $dbh
+    */
    public function recuperaSeguidos($dbh) {
-       $query = "SELECT * FROM seguido WHERE idSeguido = :id";
+       $query = "SELECT idUsuario FROM seguido WHERE idSeguido = :id";
        $consulta = $dbh->prepare($query);
-       $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Seguido");
+       $consulta->setFetchMode(PDO::FETCH_ASSOC);
+       //$consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Seguido");
        $consulta->execute(array(":id" => $this->id));
        $seguidos = $consulta->fetchAll();      
        foreach ($seguidos as $seguido) {
            $query = "SELECT * FROM usuario WHERE id = :id";
            $consulta = $dbh->prepare($query);
            $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Usuario");
-           $consulta->execute(array(":id" => $seguido->getIdUsuario()));
+           $consulta->execute(array(":id" => $seguido['idUsuario']));
            $usuario = $consulta->fetch();
            $usuario->recuperaFrases($dbh);
            $this->seguidos->add($usuario);
        }
    }
+   /**
+    * Si no hay seguidos, añade a la coleccion noSeguidos
+    * todos los usuarios de la BBDD menos el actual.
+    * Si hay seguidos, añade a la coleccion noSeguidos todos 
+    * los usuarios que no coincidan con el actual ni con usuarios
+    * seguidos.
+    * 
+    * @param PDO $dbh
+    */
    public function recuperaNoSeguidos($dbh) {
        
        if($this->seguidos->isEmpty()){
@@ -135,6 +152,12 @@ class Usuario {
        }
       
    }
+   /**
+    * Recupera todas las frases del usuario
+    * y las añade a su coleccion de frases.
+    * 
+    * @param PDO $dbh
+    */
    public function recuperaFrases($dbh) {
       
         $query = "SELECT * FROM frase WHERE idUsuario = :id";
@@ -142,44 +165,46 @@ class Usuario {
         $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Frase");
         $consulta->execute(array(":id" => $this->id));
         $frases = $consulta->fetchAll();
+        //Ordenar frase por fecha
         foreach ($frases as $frase) {       
            $this->frases->add($frase); 
         }   
    }
    
-   public function recuperaFrasesById($dbh, $id) {
-       
-        $query = "SELECT * FROM frase WHERE idUsuario = :id";
-        $consulta = $dbh->prepare($query);
-        $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Frase");
-        $consulta->execute(array(":id" => $id));
-        $frases = $consulta->fetchAll();
-        $tamanio = count($frases);
-        if($tamanio != 0){
-            $this->frases->add($frases[$tamanio-1]); 
-        }
-   }
-   
-   public function crearXML($frases) {
+   /**
+    * Crea archivo XML con todos los 
+    * usuarios seguidos y sus frases.
+    *
+    * @param array Obj $frases
+    */
+   public function crearXML() {
        
 $xml = <<<XML
 <?xml version="1.0" encoding="UTF-8" ?>
 <RedSocial></RedSocial>
 XML;
         $redSocial = new SimpleXMLElement($xml);
-        
-        foreach ($frases as $y => $frase) {
-            $usuario = $redSocial->addChild("Usuario");
-            $usuario->addAttribute("id", $y);
-            foreach (  $frase as $y => $texto) {
-               $fra = $usuario->addChild("frase", $texto->getTexto());
-               $fra->addAttribute("id", $texto->getTexto());
+        $redSocial->addAttribute("Propietario", $_SESSION['usuario']->getNombre());
+        while ($usuarioActual = $_SESSION['usuario']->getSeguidos()->iterate()){
+            $usuario = $redSocial->addChild("Seguido");
+            $usuario->addAttribute("Nombre", $usuarioActual->getNombre());
+            while($frase = $usuarioActual->getFrases()->iterate()){
+                $usuario->addChild("Frase", $frase->getTexto());
             }
-            
-        }   
+                
+        }
+        
         $archivo = $redSocial->asXML();
         $fichero = fopen("xml/archivo.xml", "w+");
         fwrite($fichero, $archivo);
         
+   }
+   
+   public function persistSeguido($dbh,$idUsuario, $idSeguido) {
+       
+       $query = "INSERT INTO seguido (idUsuario, idSeguido) VALUES (:idUsuario, :idSeguido)";
+       $insert = $dbh->prepare($query);
+       $insert->execute(array(":idUsuario" => $idUsuario, "idSeguido" => $idSeguido));
+       
    }
 }
