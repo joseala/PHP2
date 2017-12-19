@@ -13,6 +13,7 @@
                 <h2>Profesor: <?= $_SESSION['profesor']->getNombre(); ?></h2>
             </li>
             <?php while ($alumnoActual = $_SESSION['profesor']->getAlumnos()->iterate()){?>
+            <ul>
                 <li>
                     <h2>Alumno: <?= $alumnoActual->getNombre(); ?></h2>
                 </li>
@@ -23,6 +24,7 @@
                     </li>
                     <?php }?>
                     </ul>
+            </ul>
             <?php }?>    
         </ul>
         <form action="index.php" method="POST">

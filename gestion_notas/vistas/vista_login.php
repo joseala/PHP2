@@ -16,8 +16,7 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <h1>RED SOCIAL</h1>
-        <h2><?= $mensaje; ?></h2>
+        <h1>GESTION NOTAS</h1>
         <form action="index.php" method="POST">
             <fieldset>
             <label>Nombre</label>
