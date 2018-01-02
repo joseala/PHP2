@@ -39,19 +39,13 @@ class Admin {
     }
     
 
-    public function getByCredenciales($dbh) {
+    public static function getByCredenciales($dbh,$nombre,$pass) {
         $query = "SELECT * FROM admin WHERE nombre = :nombre AND pass = :pass";
         $consulta = $dbh->prepare($query);
         $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Admin");
-        $consulta->execute(array(":nombre" => $this->nombre, ":pass" => $this->pass));
+        $consulta->execute(array(":nombre" => $nombre, ":pass" => $pass));
         $logueado = $consulta->fetch();
-        if($logueado){
-            $this->setId($logueado->getId());
-            $encontrado = true;
-        }else{
-            $encontrado = false;
-        }
-        return $encontrado;
+        return $logueado;
         
     }
     

@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -15,14 +11,14 @@ and open the template in the editor.
         <form action="index.php" method="POST">
             <br>
             <label>Nombre</label>
-            <?php $nombre = $_SESSION['producto']->getNombre();?>
+            <?php $nombre = $producto->getNombre();?>
             <input type='text' value='<?= $nombre; ?>' name='nombre'>
             
             <br>
             <label>Precio</label>
             <?php 
-                $idCategoria = $_SESSION['producto']->getIdCategoria();
-                $precio = $_SESSION['producto']->getPrecio(); ?>
+                $idCategoria = $producto->getIdCategoria();
+                $precio = $producto->getPrecio(); ?>
                 <input type='text' value='<?= $precio; ?>' name='precio'> 
             <br>
             <label>Categoria</label>

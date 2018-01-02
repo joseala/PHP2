@@ -12,7 +12,7 @@
         <br>
         <form action="index.php" method="POST">
             <?php while ($producto = $categoriaActual->getProductos()->iterate()) { ?>
-                <h2><input type='radio' value='<?= $producto->getId();?>' name='id'>Denominacion: <?= $producto->getNombre();?> Precio: <?= $producto->getPrecio();?></h2>
+                <h2><input type='radio' value='<?= $producto->getId();?>' name='id'>Denominacion: <?= $producto->getNombre();?> ______ Precio: <?= $producto->getPrecio();?> €</h2>
             <?php  } ?>
             <br>
             <input type="submit" value="Crear producto" name="crear">
