@@ -8,8 +8,7 @@ session_start();
 $dbh = BD::getConexion();
 if(isset($_SESSION['admin'])){
     if(isset($_POST['ver'])){
-        if(filter_input(INPUT_POST,'id')){//Se comprueba si hay un id en POST, sino se vuelve e la vista categorias.
-            
+        if(filter_input(INPUT_POST,'id')){//Se comprueba si hay un id en POST, sino se vuelve e la vista categorias.           
             $idCategoria = $_POST['id'];           
             $categorias = $_SESSION['categorias'];          
             foreach ($categorias as $categoria) {
@@ -18,8 +17,7 @@ if(isset($_SESSION['admin'])){
                 }
             }           
             $categoriaActual = $_SESSION['categoria'];
-            include 'vistas/vista_productos_categoria.php';        
-   
+            include 'vistas/vista_productos_categoria.php';         
         }else{
             $categorias = $_SESSION['categorias'];
             include 'vistas/vista_categorias.php';
@@ -27,9 +25,9 @@ if(isset($_SESSION['admin'])){
     }elseif (isset ($_POST['crear'])) {       
         include 'vistas/vista_crear_producto.php';
     }elseif (isset ($_POST['guardar'])) {
-        $nombre = $_POST['nombre'];
-        $precio = $_POST['precio'];
-        if($nombre != "" && $precio != ""){//Compruebo que vienen datos.
+        if(filter_input(INPUT_POST,'nombre') && filter_input(INPUT_POST,'precio') ){
+            $nombre = $_POST['nombre'];
+            $precio = $_POST['precio'];
             $producto = new Producto($nombre, $precio,$_SESSION['categoria']->getId() );
             $producto->persist($dbh);//Guardo en bbdd el nuevo producto y en la coleccion de productos de la categoria.
             $_SESSION['categoria']->getProductos()->add($producto);
