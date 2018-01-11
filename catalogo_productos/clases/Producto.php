@@ -45,25 +45,32 @@ class Producto {
     }
 
     public function persist($dbh) {
-        $query = "INSERT INTO producto (idCategoria,nombre,precio) VALUES (:idCategoria,:nombre,:precio)";
-        $insert = $dbh->prepare($query);
-        $persistido = $insert->execute(array(":idCategoria" => $this->idCategoria, ":nombre" => $this->nombre, ":precio" => $this->precio));
-        if($persistido){
-            $this->setId($dbh->lastInsertId());
+        if($this->id){
+            $query = "UPDATE producto SET idCategoria = :idCategoria,nombre = :nombre, precio = :precio WHERE id = :id";
+            $update = $dbh->prepare($query);
+            $update->execute(array(":id" => $this->id,":idCategoria" => $this->idCategoria ,":nombre" => $this->nombre ,":precio" => $this->precio ));
+        }else{
+            $query = "INSERT INTO producto (idCategoria,nombre,precio) VALUES (:idCategoria,:nombre,:precio)";
+            $insert = $dbh->prepare($query);
+            $persistido = $insert->execute(array(":idCategoria" => $this->idCategoria, ":nombre" => $this->nombre, ":precio" => $this->precio));
+            if($persistido){
+                $this->setId($dbh->lastInsertId());
+            }
         }
-    }
-    
-    public function updateProducto($dbh) {
-        $query = "UPDATE producto SET idCategoria = :idCategoria,nombre = :nombre, precio = :precio WHERE id = :id";
-        $update = $dbh->prepare($query);
-        $update->execute(array(":id" => $this->id,":idCategoria" => $this->idCategoria ,":nombre" => $this->nombre ,":precio" => $this->precio )); 
-    }
-    
-     public static function deleteProducto($dbh,$id) {
+    }   
+    public static function deleteProducto($dbh,$id) {
         
         $query = "DELETE FROM producto WHERE id = :id";
         $delete = $dbh->prepare($query);
-        $delete->execute(array(":id" => $id));  
+        $delete->execute(array(":id" => $id));          
+    }
+    public static function getProductosByIdCategoria($dbh,$idCategoria) {
         
+        $query = "SELECT * FROM producto WHERE idCategoria = :idCategoria";
+        $consulta = $dbh->prepare($query);
+        $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Producto");
+        $consulta->execute(array(":idCategoria" => $idCategoria));
+        $productos = $consulta->fetchAll();
+        return $productos;
     }
 }

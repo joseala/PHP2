@@ -43,11 +43,7 @@ class Categoria {
         $consulta->execute();
         $categorias = $consulta->fetchAll();
         foreach ($categorias as $categoria) {
-            $query = "SELECT * FROM producto WHERE idCategoria = :idCategoria";
-            $consulta = $dbh->prepare($query);
-            $consulta->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Producto");
-            $consulta->execute(array(":idCategoria" => $categoria->getId()));
-            $productos = $consulta->fetchAll();
+            $productos = Producto::getProductosByIdCategoria($dbh,$categoria->getid());
             foreach ($productos as $producto) {
                 $categoria->getProductos()->add($producto);
             }

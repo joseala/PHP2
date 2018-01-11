@@ -54,7 +54,7 @@ if(isset($_SESSION['admin'])){
         $producto->setNombre($nombre);
         $producto->setPrecio($precio);
         if($idCategoria == $producto->getIdCategoria()){//Si la categoria no ha cambiado se modifica en bbdd.         
-            $producto->updateProducto($dbh); //Se modifica en bbdd el producto.
+            $producto->persist($dbh); //Se modifica en bbdd el producto.
         }else{// Si la categoria ha cambiado, se borra el producto de la coleccion de la categoria anterior.
             $_SESSION['categoria']->getProductos()->removeByProperty('id', $producto->getId());
             $producto->setIdCategoria($idCategoria);//Se modifica al id de la nueva categoria.
@@ -62,7 +62,7 @@ if(isset($_SESSION['admin'])){
             foreach ($categorias as $categoria) {
                 if($idCategoria == $categoria->getId()){//Se busca en la coleccion de categorias la nueva categoria.
                     $categoria->getProductos()->add($producto);//Se añade a su coleccion.
-                    $producto->updateProducto($dbh);//Se modifica en bbdd el producto..
+                    $producto->persist($dbh);//Se modifica en bbdd el producto..
                 }
             }
         }
@@ -82,9 +82,8 @@ if(isset($_SESSION['admin'])){
         }
          
     }elseif (isset ($_POST['salir'])) {
-        unset($_SESSION['admin']);
-        unset($_SESSION['categorias']);
-        unset($_SESSION['categoria']);
+        session_unset();
+        session_destroy();
         include 'vistas/vista_login.php';
     }elseif (isset ($_POST['volver'])) {
         $categoriaActual = $_SESSION['categoria'];
